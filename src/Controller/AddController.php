@@ -77,7 +77,7 @@ class AddController extends AbstractController
                         $file->move($this->getParameter('brochures_directory'),$fileName);
 
                         $Anime->setBrochure($fileName);
-                        $url_image = $this->generateUrl('index')."uploads/".$fileName;
+                        $url_image = $this->generateUrl('index')."uploads/img/anime/".$fileName;
                         $Anime->setImage($url_image);
 
                         ## Add categorie

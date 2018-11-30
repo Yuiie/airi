@@ -1,0 +1,171 @@
+{% extends 'native.html.twig' %}
+{% set message = message %}
+{% set listanime = anime %}
+
+
+{% block body_home %}
+
+    {% block stylesheets %}
+            {{ parent() }}
+    {% endblock %}
+    <link href="{{ path('index') }}css/feed/index.css" rel="stylesheet">
+            <br /><br />
+   
+                <div class="col-sm-6 col-md-8">
+                    <div class="my-card">
+                        <p style="margin-left: 20px">message</p>
+                        <div style="margin: 10px;display:true">
+                            <form method="POST" name="form" id="form">
+                                <input class="c-input" id="msg" type="text">
+                            </form>
+                            <script type="text/javascript">
+                                $(function(){
+                                    $('#form').submit(function(e){ 
+                                        e.preventDefault();
+                                            var msg = $("#msg").val();
+                                            var parent = '0';
+                                            var data = {
+                                                parent: parent,
+                                                msg: msg
+                                            };
+                                            $.ajax({
+                                                data: {
+                                                    parent: parent,
+                                                    msg: msg
+                                                },
+                                                type: "POST",
+                                                url: "{{ path('index') }}dbfeed",
+
+                                            })
+                                            conn.send(JSON.stringify(data));
+                                    });
+                                });
+                            </script>
+                        </div>
+                        <!-- End Formulaire -->
+                        <div style="margin-bottom:10px"></div>
+                    </div>
+                </div>
+        {% set count = 0 %}
+        {% for feed in arrayFeed %}
+            {% if feed.parent == 0 and count == 0 %}
+                <div class="col-sm-6 col-md-8">
+                    <div class="my-card">
+                            <p style="padding-left: 20px">{{ feed.pseudo }} {{ feed.message }}</p>
+                            <button style="margin-left: 10px;background-color: transparent;border:none;color:blue" onclick="openCity(event, '{{ feed.id }}')">Repondre</button>
+                            <div style="margin-top: 10px" id="{{ feed.id }}" class="tabcontent">
+                                <!-- Formulaire -->
+                                <form method="POST" name="form_{{ feed.id }}" id="form_{{ feed.id }}">
+                                    <input class="c-input" id="msg_{{ feed.id }}" type="text">
+                                </form>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $('#form_{{ feed.id }}').submit(function(e){ 
+                                            e.preventDefault();
+                                                var msg = $("#msg_{{ feed.id }}").val();
+                                                var parent = '{{ feed.id }}';
+                                                var data = {
+                                                    parent: parent,
+                                                    msg: msg
+                                                };
+                                                $.ajax({
+                                                    data: {
+                                                        parent: parent,
+                                                        msg: msg
+                                                    },
+                                                    type: "POST",
+                                                    url: "{{ path('index') }}dbfeed",
+
+                                                })
+                                                conn.send(JSON.stringify(data));
+                                        });
+                                    });
+                                </script>
+                                <!-- End Formulaire -->
+                            </div>
+                            <div style="margin-bottom:10px"></div>
+            {% endif %}
+            {% if feed.parent == 0 and count != 0 %}
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-8">
+                    <div class="my-card">
+                        <p style="margin-left: 20px">{{ feed.pseudo }} {{ feed.message }}</p>
+                        <button style="margin-left: 10px;background-color: transparent;border:none;color:blue" onclick="openCity(event, '{{ feed.id }}')">Repondre</button>
+                        <div style="margin-top: 10px" id="{{ feed.id }}" class="tabcontent">
+                            <!-- Formulaire -->
+                            <form method="POST" name="form_{{ feed.id }}" id="form_{{ feed.id }}">
+                                <input class="c-input" id="msg_{{ feed.id }}" type="text">
+                            </form>
+                            <script type="text/javascript">
+                                $(function(){
+                                    $('#form_{{ feed.id }}').submit(function(e){ 
+                                        e.preventDefault();
+                                            var msg = $("#msg_{{ feed.id }}").val();
+                                            var parent = '{{ feed.id }}';
+                                            var data = {
+                                                parent: parent,
+                                                msg: msg
+                                            };
+                                            $.ajax({
+                                                data: {
+                                                    parent: parent,
+                                                    msg: msg
+                                                },
+                                                type: "POST",
+                                                url: "{{ path('index') }}dbfeed",
+
+                                            })
+                                            conn.send(JSON.stringify(data));
+                                    });
+                                });
+                            </script>
+                            <!-- End Formulaire -->
+                        </div>
+                        <div style="margin-bottom:10px"></div>
+            {% endif %}
+            {% if feed.parent != 0 %}
+                    <div class="my-card1">
+                        <div class="text">
+                            <p style="margin-left: 10px">{{ feed.pseudo }} {{ feed.message }}</p>
+                                <button style="margin-left: 10px;background-color: transparent;border:none;color:blue" onclick="openCity(event, '{{ feed.id }}')">Repondre</button>
+                            <div style="margin-top: 10px" id="{{ feed.id }}" class="tabcontent">
+                                <!-- Formulaire -->
+                                <form method="POST" name="form_{{ feed.id }}" id="form_{{ feed.id }}">
+                                    <input class="c-input" id="msg_{{ feed.id }}" type="text">
+                                </form>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $('#form_{{ feed.id }}').submit(function(e){ 
+                                            e.preventDefault();
+                                                var msg = $("#msg_{{ feed.id }}").val();
+                                                var parent = '{{ feed.id }}';
+                                                var data = {
+                                                    parent: parent,
+                                                    msg: msg
+                                                };
+                                                $.ajax({
+                                                    data: {
+                                                        parent: parent,
+                                                        msg: msg
+                                                    },
+                                                    type: "POST",
+                                                    url: "{{ path('index') }}dbfeed",
+
+                                                })
+                                                conn.send(JSON.stringify(data));
+                                        });
+                                    });
+                                </script>
+                                <!-- End Formulaire -->
+                            </div>
+                        </div>
+                    </div>
+            {% endif %}
+            {% set count = count + 1 %}
+        {% endfor %}
+        </div>
+    </div>
+    <script src="{{ asset('js/tabs.js') }}"></script>
+{% endblock %}
+

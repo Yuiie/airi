@@ -1,0 +1,13 @@
+{{ render(controller(
+        'App\\Controller\\HistoriqueController::streaming',
+        { 
+            'path': path(app.request.attributes.get('_route'),
+            app.request.attributes.get('_route_params')),
+            'id': article.id,
+            'ep': ep,
+            'nom': article.nom,
+            'content': article.content,
+            'image': article.image 
+        }
+    ))
+}}

@@ -1,0 +1,78 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<!doctype html>
+<html lang="en-us">
+{% block stylesheets %}
+      <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>MA CO</title>
+
+        <meta name="description" content="Dashboard UI Kit">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="{{ asset('assets/css/login.min.css') }}" rel="stylesheet">
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600" rel="stylesheet">
+ <script src="js/main.min.js"></script>
+        <!-- Favicon -->
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+{% endblock %}
+{% block body_home %}
+
+<div class="o-page__card" >
+            <div class="c-card u-mb-xsmall">
+                <header class="c-card__header u-pt-large">
+                <center>
+                        <img src="{{ asset('uploads/log.jpg') }}" style="width: 200px" alt="JePilote">
+                        </center>
+                    <h1 class="u-h3 u-text-center u-mb-zero">Welcome back! Please login.</h1>
+                </header>                
+                {% if error %}
+                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    <br/>
+                {% endif %}
+                <form action="{{ path("fos_user_security_check") }}" method="POST">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+                    <div class="c-field u-mb-small">
+                        <label class="c-field__label" for="input1">Log in with your username</label> 
+                        <input class="c-input" type="text" placeholder="{{ 'security.login.username'|trans }}"
+                               id="username" name="_username" value="{{ last_username }}" required="required"> 
+                    </div>
+
+                    <div class="c-field u-mb-small">
+                        <label class="c-field__label" for="input2">Password</label> 
+                        <input class="c-input" type="password" placeholder="{{ 'security.login.password'|trans }}"
+                               id="password" name="_password" required="required"> 
+                    </div>
+
+                    <button class="c-btn c-btn--info c-btn--fullwidth" type="submit" id="_submit" name="_submit"
+                                   value="{{ 'security.login.submit'|trans }}">Sign in to Dashboard</button>
+
+                    <span class="c-divider c-divider--small has-text u-mv-medium">Login via social networks</span>
+
+                    <div class="o-line">
+                        <a class="c-icon u-bg-twitter" href="#!">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+
+                        <a class="c-icon u-bg-facebook" href="#!">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+
+                        <a class="c-icon u-bg-pinterest" href="#!">
+                            <i class="fa fa-pinterest"></i>
+                        </a>
+
+                        <a class="c-icon u-bg-dribbble" href="#!">
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <div class="o-line">
+                <a class="u-text-mute u-text-small" href="register.html">Don’t have an account yet? Get Started</a>
+                <a class="u-text-mute u-text-small" href="forgot-password.html">Forgot Password?</a>
+            </div>
+        </div>
+        {% endblock %}
+</html>

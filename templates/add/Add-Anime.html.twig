@@ -1,0 +1,44 @@
+{% extends 'native.html.twig' %}
+{% set message = message %}
+{% set listanime = anime %}
+{% block stylesheets %}
+        {{ parent() }}
+{% endblock %}
+
+{% block body_home %}
+
+<div class="container">
+        {{ form_start(form) }}
+
+        <div class="c-field u-mb-small">
+            <label class="c-field__label" for="input1">Nom de l'anime:</label> 
+            {{ form_widget(form.nom, {'attr':{'class':'c-input', 'placeholder' : 'Nom de l anime'}}) }}
+            {{ form_errors(form.nom) }}
+        </div>
+        <div class="c-field u-mb-small">
+            <label class="c-field__label" for="input2">Synopsis:</label> 
+            {{ form_widget(form.content, {'attr':{'class':'c-input', 'placeholder' : 'Synopsis'}}) }}
+            {{ form_errors(form.content) }}
+        </div>
+        <div class="form-group">
+        {{ form_row(form.brochure) }}
+        </div>
+
+
+        <!--  Show categories -->
+
+        {% for categorie in categories %}
+        <div class="c-choice c-choice--checkbox">
+            <input class="c-choice__input" id="{{ categorie.id }}" name="{{ categorie.id }}" type="checkbox">
+            <label class="c-choice__label" for="{{ categorie.id }}"style="font-color:white">{{ categorie.categorie }}</label>
+        </div>
+        {% endfor %}
+        <!--  end categories -->
+
+        <input class="btn btn-primary" type="submit" value="Submit">
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+{% block js %}
+        {{ parent() }}
+{% endblock %}

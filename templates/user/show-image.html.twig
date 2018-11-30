@@ -1,0 +1,31 @@
+{% extends 'native.html.twig' %}
+{% set message = message %}
+{% set listanime = anime %}
+{% block stylesheets %}
+        {{ parent() }}
+{% endblock %}
+
+{% block body_home %}
+
+<div class="container">
+
+    {% for img in image %}
+        <div class="col-sm-6 col-md-3">
+                <div class="c-project-card u-mb-medium">
+                    <div class="c-project-card__content">
+                        <div class="c-project-card__head" style="min-height:150px;background-image: url({{ path('index') }}uploads/img/user/{{ img.image }});background-size: cover;background-repeat:no-repeat;">
+                        </div>
+
+                        <div class="c-project-card__meta">
+                            <h4 class="c-project-card__title"><a class="nav-item" href="">{{ img.nom }}</a></h4>
+                            <p class="c-project-card__info" style="float:right">{{ img.pseudo.username }} | {{ img.date|date("m/d/Y") }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    {% endfor %}
+</div>
+{% endblock %}
+{% block js %}
+        {{ parent() }}
+{% endblock %}

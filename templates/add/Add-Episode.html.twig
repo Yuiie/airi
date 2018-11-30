@@ -1,0 +1,44 @@
+{% extends 'native.html.twig' %}
+{% set message = message %}
+{% set listanime = anime %}
+
+         {% block stylesheets %}
+            <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+            <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                 <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600" rel="stylesheet">
+
+        <!-- Favicon -->
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <!-- Stylesheet -->
+        <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/main.min.css') }}" rel="stylesheet">
+        
+        {% endblock %}
+
+{% block body_home %}
+  <div class="row u-m-small">
+        <center>
+        {{ form_start(form) }}
+
+
+        <div class="form-group">
+            {{ form_label(form.anime) }}
+            {{ form_widget(form.anime, {'attr':{'class':'c-select has-search'}}) }}
+            {{ form_errors(form.anime) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.episode) }}
+            {{ form_widget(form.episode, {'attr':{'class':'c-input'}}) }}
+            {{ form_errors(form.episode) }}
+        </div><br />
+        <input type="submit" value="Send" class="c-input"/>
+        {{ form_end(form) }}
+        </center>
+    </div>
+    <script src="../js/main.min.js"></script>
+{% endblock %}

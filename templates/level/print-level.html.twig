@@ -1,0 +1,36 @@
+
+
+
+<script>
+$(document).ready(function() {
+
+        var MaBarreProgression = $('#MaBarreProgression'),
+            max = MaBarreProgression.attr('now'),
+            time = 100, 
+            value = MaBarreProgression.val();
+
+        var Telechargement = function() {
+            value += 1;
+            addValue = MaBarreProgression.val(value);
+
+            $('.progress-value').html('Exp '+ value + '%');
+
+            if (value == max) {
+                clearInterval(animation);   
+                $('.progress-value').html('{{ level.exp }} / {{ level.max }}');                 
+            }
+        };
+
+        var animation = setInterval(function() {
+            Telechargement();
+        }, time);
+
+});
+</script>
+<center>
+Level {{ level.lvl }}
+<br>
+<progress id="MaBarreProgression" value="0" now="{{ level.exp }}" max="{{ level.max }}"></progress>
+<br>
+<span class="progress-value"></span>
+</center>

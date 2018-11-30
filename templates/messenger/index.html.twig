@@ -1,0 +1,212 @@
+{% extends 'native.html.twig' %}
+{% set message = message %}
+{% set listanime = anime %}
+
+
+{% block body_home %}
+
+    {% block stylesheets %}
+            {{ parent() }}
+
+            <!--  Tab -->
+            <style>
+                    /* Style the tab */
+                    .tab {
+                        overflow: hidden;
+                        background-color: transparent;
+                    }
+
+                    /* Style the buttons that are used to open the tab content */
+                    .tab button {
+                        background-color: inherit;
+                        float: left;
+                        border: none;
+                        outline: none;
+                        cursor: pointer;
+                        padding: 14px 16px;
+                        transition: 0.3s;
+                    }
+
+                    /* Change background color of buttons on hover */
+                    .tab button:hover {
+                        background-color: transparent;
+                    }
+
+                    /* Create an active/current tablink class */
+                    .tab button.active {
+                        background-color: transparent;
+                    }
+
+                    /* Style the tab content */
+                    .tabcontent {
+                        display: none;
+                        padding: 6px 12px;
+                        border-top: none;
+                    }
+
+                    .hide {
+                        display: none;
+                    }
+            </style>
+            <script>
+                    function openCity(evt, cityName) {
+                        // Declare all variables
+                        var i, tabcontent, tablinks;
+
+                        // Get all elements with class="tabcontent" and hide them
+                        tabcontent = document.getElementsByClassName("tabcontent");
+                        for (i = 0; i < tabcontent.length; i++) {
+                            tabcontent[i].style.display = "none";
+                        }
+
+                        // Get all elements with class="tablinks" and remove the class "active"
+                        tablinks = document.getElementsByClassName("tablinks");
+                        for (i = 0; i < tablinks.length; i++) {
+                            tablinks[i].className = tablinks[i].className.replace(" active", "");
+                        }
+
+                        // Show the current tab, and add an "active" class to the button that opened the tab
+                        document.getElementById(cityName).style.display = "block";
+                        evt.currentTarget.className += " active";
+                    }
+            </script>
+            <!-- FIN Tab -->
+    {% endblock %}
+
+ <div class="container-fluid c-messanger">
+                <div class="row">
+                    <div class="col-sm-4 u-p-zero">
+                        <div class="u-p-small u-border-bottom u-border-right">
+                            <div class="c-field has-icon-right">
+                                <input class="c-input" type="text" placeholder="Search">
+                                <span class="c-field__icon">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 u-p-zero">
+                        <div class="u-height-100 u-flex u-align-items-center u-border-bottom">
+                            <h5 class="u-mb-zero u-ml-medium">Messages</h5>
+                            <span class="u-ml-xsmall u-text-tiny u-mr-auto">
+                                <i class="fa fa-circle u-color-success"></i>
+                            </span>
+
+                            <div class="c-btn-group u-mr-medium u-hidden-down@tablet">
+                            <div class="tab">
+                                <a class="c-btn c-btn--secondary" onclick="openCity(event, 'new-message')">
+                                    <i class="u-opacity-heavy fa fa-paper-plane-o"></i>
+                                </a>
+                            </div>
+                                <a class="c-btn c-btn--secondary">
+                                    <i class="u-opacity-heavy fa fa-trash-o"></i>
+                                </a>
+                                <a class="c-btn c-btn--secondary">
+                                    <i class="u-opacity-heavy fa fa-hashtag"></i>
+                                </a>
+                            </div>
+                            <span class="u-text-mute u-text-small u-mr-small u-hidden-down@tablet">1 of 28</span>
+                            <div class="c-btn-group u-mr-small u-mv-small">
+                                <a class="c-btn c-btn--secondary">
+                                    <i class="u-opacity-heavy fa fa-caret-left"></i>
+                                </a>
+                                <a class="c-btn c-btn--secondary">
+                                    <i class="u-opacity-heavy fa fa-caret-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- // .row -->
+
+                <div class="row">
+                    <div class="col-sm-4 u-p-zero">
+                        <div class="c-messages">
+                            <!-- tab messages -->
+                            <div class="tab">
+                                {% for message in messages %}
+                                <a class="c-message is-active" onclick="openCity(event, '{{ message.expediteur.id }}')">
+                                    <div class="o-media">
+                                        <div class="o-media__img u-mr-small">
+                                            <div class="c-avatar c-avatar--small">
+                                                <img class="c-avatar__img" src="img/avatar-72.jpg" alt="Adam's Face">
+                                            </div> 
+                                        </div>
+                                        <div class="o-media__body">
+                                            <h4 class="c-message__title">{{ message.expediteur }}
+                                            <span class="c-message__title-meta">Twitter</span></h4>
+                                            <span class="c-message__time">{{ message.date|date('Y-m-d') }}</span>
+                                        </div>
+                                    </div>
+                                    <span class="c-message__counter u-hidden-down@desktop">1</span>
+                                    <p class="c-message__snippet">{{ message.message }}</p>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ################################################################### -->
+
+                    <div class="col-sm-8 u-p-zero">
+                        <div class="c-chat">
+                            <div class="c-chat__body">
+                              
+                                {% for message in messages %}
+                                <div id="{{ message.expediteur.id }}" class="tabcontent">
+                                <!-- Message -->
+                                    <div class="c-chat__message o-media">
+                                        <div class="o-media__img u-mr-small">
+                                            <div class="c-avatar c-avatar--small">
+                                                <div class="c-avatar__img">
+                                                    <img src="img/avatar-72.jpg" alt="Adam's Face">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="o-media__body">
+                                            <h4 class="c-chat__message-author">{{ message.expediteur }}</h4>
+                                            <span class="c-chat__message-time">{{ message.date|date('Y-m-d') }}</span>
+                                            <p class="c-chat__message-content">{{ message.message }}</p>
+                                        </div>
+                                    </div>
+                                    <!-- send messages -->
+                                    <form class="c-chat__composer" method="post">
+                                        <div class="c-field has-addon-left">
+                                            <button class="c-field__addon"><i class="fa fa-plus"></i></button> 
+                                            <input class="c-input" name="message" type="text" placeholder="Clark">
+                                            <input class="hide" value="{{ message.expediteur }}" name="destinataire">
+                                        </div>
+                                    </form>
+                                <!-- Fin Message -->
+                                </div>
+                            {% endfor %}
+
+
+
+                            <!-- New Message -->
+                            <div id="new-message" class="tabcontent">
+                                    <form method="post">
+                                   
+                                        <div class="c-field u-mb-small">
+                                            <label class="c-field__label" for="input1">Destinataire:</label> 
+                                            <input class="c-input" name="destinataire"><br />
+                                        </div>
+                                        <div class="c-field has-addon-left">
+                                            <button class="c-field__addon"><i class="fa fa-plus"></i></button> 
+                                            <input class="c-input" name="message" type="text" placeholder="Clark">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- Fin New Message -->
+
+
+</div>
+                        </div>
+                    </div>
+
+
+                </div><!-- // .row -->
+            </div><!-- // .container --> 
+
+
+{% endblock %}

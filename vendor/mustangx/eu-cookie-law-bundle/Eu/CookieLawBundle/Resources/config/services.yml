@@ -1,8 +1,0 @@
-parameters:
-    eu.cookie_law_bar.service.class: Eu\CookieLawBundle\Service\CookieLawService
-    eu.cookie_law_bar.event_listener.class: Eu\CookieLawBundle\EventListener\CookieLawBarListener
-
-services:
-    eu.cookie_law_bar.service:
-        class: '%eu.cookie_law_bar.service.class%'
-        arguments:    ['@templating', '%eu.cookie_law_bar.template%']

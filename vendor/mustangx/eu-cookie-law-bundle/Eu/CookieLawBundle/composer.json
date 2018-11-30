@@ -1,0 +1,9 @@
+{
+    "name": "mustangx/eu-cookie-law-bundle",
+    "description": "Eu Cookie Law Bundle to handle new privacy law",
+    "license": "MIT",
+    "autoload": {
+        "psr-0": { "Eu\\CookieLawBundle": "" }
+    },
+    "target-dir" : "Eu/CookieLawBundle"
+}

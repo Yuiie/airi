@@ -1,0 +1,33 @@
+{% extends 'native.html.twig' %}
+{% set message = message %}
+{% set listanime = anime %}
+
+{% block body_home %}
+
+    {% block stylesheets %}
+            {{ parent() }}
+    {% endblock %}
+    {# ajouter un formulaire #}
+    <div class="container">
+        {{ form_start(form) }}
+
+        <div class="form-group">
+            {{ form_label(form.nom) }}
+            {{ form_widget(form.nom, {'attr':{'class':'c-input'}}) }}
+            {{ form_errors(form.nom) }}
+        </div>
+        <br />
+        <input type="submit" value="Send" class="c-input"/>
+        {{ form_end(form) }}
+    </div>
+    <br />
+
+    {# ajouter un flashbag, oublie pas aussi dans le controller #}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <br />
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    
+{% endblock %}

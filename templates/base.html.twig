@@ -1,0 +1,65 @@
+    {% include 'nav.html.twig' %}
+<!DOCTYPE html>
+<html>
+
+              <i class="fa fa-circle-o-notch fa-spin" style="font-size: 2.3em"></i>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Otaku-Stream{% endblock %}</title>
+        {# block stylesheets %}
+            <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        {% endblock #}
+        {% block stylesheets %}
+            <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+            <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        {% endblock %}
+    </head>
+    <body>
+      {% block nav %}
+      {% endblock %}
+  <div class="container" style="margin-top:30px">
+  <div class="row">
+  {% block recherche %}
+      {% endblock %}
+    <div class="col-sm-4">
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Top Anime</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('index') }}add/anime">Ajouter un anime</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('index') }}add/episode">Ajouter un episode</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('index') }}group/create">Créer un groupe</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('index') }}group/apply">Postuler à un groupe</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('index') }}group/">Mes groupe</a>
+        </li>
+      </ul>
+      <hr class="d-sm-none">
+    </div>
+    <div class="col-sm-8">
+      <h2>Derniere sortie</h2>
+        {% block body_home %}{% endblock %}
+    </div>
+  </div>
+</div>
+
+    <div class="jumbotron text-center" style="margin-bottom:0">
+      <p>Copyright © {{ 'now'|date('Y') }} <a href="{{ path('index') }}">Otaku-Stream</a>.</p>
+    </div>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

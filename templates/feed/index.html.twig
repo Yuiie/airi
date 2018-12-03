@@ -177,7 +177,7 @@
      $(document).ready(function(){
             conn.onmessage = function(e) {
                 obj = JSON.parse(e.data);
-               document.getElementById('local').innerHTML = document.getElementById('local').innerHTML+"<br />"+'<div class="text"><p style="margin-left: 10px">' obj.pseudo obj.msg '</p></div></div>';
+               document.getElementById('local').innerHTML = document.getElementById('local').innerHTML+"<br />"+'<div class="text"><p style="margin-left: 10px">'+obj.pseudo+obj.msg+'</p></div></div>';
               // document.write(e.data);
 
 			   console.log(e.data);		   

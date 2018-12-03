@@ -19,6 +19,7 @@
                                 <input class="c-input" id="msg" type="text">
                             </form>
                             <script type="text/javascript">
+                                var conn = new WebSocket('ws://51.38.230.190:8080');
                                 $(function(){
                                     $('#form').submit(function(e){ 
                                         e.preventDefault();
@@ -37,7 +38,6 @@
                                                 url: "{{ path('index') }}dbfeed",
 
                                             })
-                                            var conn = new WebSocket('ws://51.38.230.190:8080');
                                             conn.send(JSON.stringify(data));
                                     });
                                 });
@@ -60,6 +60,7 @@
                                     <input class="c-input" id="msg_{{ feed.id }}" type="text">
                                 </form>
                                 <script type="text/javascript">
+                                    var conn = new WebSocket('ws://51.38.230.190:8080');
                                     $(function(){
                                         $('#form_{{ feed.id }}').submit(function(e){ 
                                             e.preventDefault();
@@ -78,7 +79,6 @@
                                                     url: "{{ path('index') }}dbfeed",
 
                                                 })
-                                                var conn = new WebSocket('ws://51.38.230.190:8080');
                                                 conn.send(JSON.stringify(data));
                                         });
                                     });
@@ -101,6 +101,7 @@
                             </form>
                             <script type="text/javascript">
                                 $(function(){
+                                    var conn = new WebSocket('ws://51.38.230.190:8080');
                                     $('#form_{{ feed.id }}').submit(function(e){ 
                                         e.preventDefault();
                                             var msg = $("#msg_{{ feed.id }}").val();
@@ -118,7 +119,6 @@
                                                 url: "{{ path('index') }}dbfeed",
 
                                             })
-                                            var conn = new WebSocket('ws://51.38.230.190:8080');
                                             conn.send(JSON.stringify(data));
                                     });
                                 });
@@ -186,7 +186,7 @@
 
             conn.onmessage = function(e) {
                 obj = JSON.parse(e.data);
-               document.getElementById('instant_'obj.id).innerHTML = document.getElementById('instant_'obj.id).innerHTML+"<br />"+'<div class="text"><p style="margin-left: 10px">'+obj.pseudo+obj.msg+'</p></div></div>';
+               document.getElementById('instant_'obj.id).innerHTML = document.getElementById('instant_'obj.id).innerHTML+"<br />"+'<div class="text"><p style="margin-left: 10px">'+obj.pseudo+obj.msg+'</p></div>';
               // document.write(e.data);
 
 			   console.log(e.data);		   

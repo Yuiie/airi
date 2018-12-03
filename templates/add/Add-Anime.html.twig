@@ -26,13 +26,34 @@
 
 
         <!--  Show categories -->
+        <style>
+                .c-choice--checkbox{
+                    display:inline;
+                }
+                table{
+                    border-collapse: collapse;
+                }
 
+        </style>
+        <table>
+        {% set tr = 0 %}
         {% for categorie in categories %}
-        <div class="c-choice c-choice--checkbox">
-            <input class="c-choice__input" id="{{ categorie.id }}" name="{{ categorie.id }}" type="checkbox">
-            <label class="c-choice__label" for="{{ categorie.id }}"style="font-color:white">{{ categorie.categorie }}</label>
-        </div>
+            {% set tr = tr + 1 %}
+            {% if tr == 1 %}
+                <tr>
+            {% endif %}
+                <td>
+                    <div class="c-choice c-choice--checkbox" style="margin-left: 4px;">
+                        <input class="c-choice__input" id="{{ categorie.id }}" name="{{ categorie.id }}" type="checkbox">
+                        <label class="c-choice__label" for="{{ categorie.id }}"style="font-color:white">{{ categorie.categorie }}</label>
+                    </div>
+                </td>
+            {% if tr == 7 %}
+                </tr>
+                {% set tr = 0 %}
+            {% endif %}
         {% endfor %}
+        </table>
         <!--  end categories -->
 
         <input class="btn btn-primary" type="submit" value="Submit">

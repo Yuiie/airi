@@ -37,6 +37,7 @@
                                                 url: "{{ path('index') }}dbfeed",
 
                                             })
+                                            var conn = new WebSocket('ws://51.38.230.190:8080');
                                             conn.send(JSON.stringify(data));
                                     });
                                 });
@@ -77,6 +78,7 @@
                                                     url: "{{ path('index') }}dbfeed",
 
                                                 })
+                                                var conn = new WebSocket('ws://51.38.230.190:8080');
                                                 conn.send(JSON.stringify(data));
                                         });
                                     });
@@ -116,6 +118,7 @@
                                                 url: "{{ path('index') }}dbfeed",
 
                                             })
+                                            var conn = new WebSocket('ws://51.38.230.190:8080');
                                             conn.send(JSON.stringify(data));
                                     });
                                 });
@@ -159,6 +162,7 @@
                                                     url: "{{ path('index') }}dbfeed",
 
                                                 })
+                                                var conn = new WebSocket('ws://51.38.230.190:8080');
                                                 conn.send(JSON.stringify(data));
                                         });
                                     });
@@ -175,11 +179,11 @@
     </div>
     <script>
      $(document).ready(function(){
-            var conn = new WebSocket('ws://localhost:8080');
+            var conn = new WebSocket('ws://51.38.230.190:8080');
             conn.onopen = function(e) {
                 console.log("Connection established!");        
             };
-            
+
             conn.onmessage = function(e) {
                 obj = JSON.parse(e.data);
                document.getElementById('instant_'obj.id).innerHTML = document.getElementById('instant_'obj.id).innerHTML+"<br />"+'<div class="text"><p style="margin-left: 10px">'+obj.pseudo+obj.msg+'</p></div></div>';

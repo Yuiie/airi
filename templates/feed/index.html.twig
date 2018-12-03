@@ -25,12 +25,15 @@
                                         e.preventDefault();
                                             var msg = $("#msg").val();
                                             var parent = '0';
+                                            var chan = '1';
                                             var data = {
+                                                chan: chan,
                                                 parent: parent,
                                                 msg: msg
                                             };
                                             $.ajax({
                                                 data: {
+                                                    chan: chan,
                                                     parent: parent,
                                                     msg: msg
                                                 },
@@ -48,7 +51,7 @@
                     </div>
                 </div>
         {% set count = 0 %}
-        {% for feed in arrayFeed %}
+        {% for feed in arrayFeed %} 
             {% if feed.parent == 0 and count == 0 %}
                 <div class="col-sm-6 col-md-8">
                     <div class="my-card">
@@ -66,13 +69,23 @@
                                             e.preventDefault();
                                                 var msg = $("#msg_{{ feed.id }}").val();
                                                 var parent = '{{ feed.id }}';
+                                                var id = '{{ feed.id }}';
+                                                var pseudo = "defck";
+                                                var chan = '1';
+                                                
                                                 var data = {
+                                                    chan: chan,
                                                     parent: parent,
+                                                    pseudo: pseudo,
+                                                    id: id,
                                                     msg: msg
                                                 };
                                                 $.ajax({
                                                     data: {
+                                                        chan: chan,
                                                         parent: parent,
+                                                        pseudo: pseudo,
+                                                        id: id,
                                                         msg: msg
                                                     },
                                                     type: "POST",
@@ -105,16 +118,25 @@
                                     $('#form_{{ feed.id }}').submit(function(e){ 
                                         e.preventDefault();
                                             var msg = $("#msg_{{ feed.id }}").val();
-                                            var parent = '{{ feed.id }}';
-                                            var data = {
-                                                parent: parent,
-                                                msg: msg
-                                            };
-                                            $.ajax({
-                                                data: {
+                                                var parent = '{{ feed.id }}';
+                                                var id = '{{ feed.id }}';
+                                                var pseudo = "defck";
+                                                var chan = '1';
+                                                var data = {
+                                                    chan: chan,
                                                     parent: parent,
+                                                    pseudo: pseudo,
+                                                    id: id,
                                                     msg: msg
-                                                },
+                                                };
+                                                $.ajax({
+                                                    data: {
+                                                        chan: chan,
+                                                        parent: parent,
+                                                        pseudo: pseudo,
+                                                        id: id,
+                                                        msg: msg
+                                                    },
                                                 type: "POST",
                                                 url: "{{ path('index') }}dbfeed",
 
@@ -127,6 +149,7 @@
                         </div>
                         <div style="margin-bottom:10px"></div>
             {% endif %}
+            <div id="s_{{ feed.id }}"></div>
             {% if feed.parent != 0 %}
                     <div class="my-card1">
                         <div class="text">
@@ -146,7 +169,9 @@
                                                 var parent = '{{ feed.parent }}';
                                                 var id = '{{ feed.id }}';
                                                 var pseudo = "defck";
+                                                var chan = '1';
                                                 var data = {
+                                                    chan: chan,
                                                     parent: parent,
                                                     pseudo: pseudo,
                                                     id: id,
@@ -154,6 +179,7 @@
                                                 };
                                                 $.ajax({
                                                     data: {
+                                                        chan: chan,
                                                         parent: parent,
                                                         pseudo: pseudo,
                                                         id: id,
@@ -173,7 +199,7 @@
                     </div>
             {% endif %}
             {% set count = count + 1 %}
-                    <div id="{{ feed.id }}s"></div> 
+                    
         {% endfor %}
         </div>
     </div>
@@ -186,7 +212,8 @@
 
             conn.onmessage = function(e) {
                 obj = JSON.parse(e.data);
-               document.getElementById(obj.id's').innerHTML = document.getElementById(obj.id's').innerHTML+"<br />"+'<div class="text"><p style="margin-left: 10px">'+obj.pseudo+obj.msg+'</p></div>';
+                if (obj.chan == '1')
+                    document.getElementById('s_'+obj.id).innerHTML = '<div class="my-card1"><div class="text"><p style="margin-left: 10px">'+obj.pseudo+" "+obj.msg+'</p></div></div>'+document.getElementById('s_'+obj.id).innerHTML;
               // document.write(e.data);
 
 			   console.log(e.data);		   

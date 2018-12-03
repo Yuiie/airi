@@ -29,7 +29,7 @@
 <!-- AFFICHAGE MESSAGE -->
 
 
-                <div class="c-chat-dialogue__messages">
+                <div class="c-chat-dialogue__messages" id="ntmz">
 
                 {% for messages in message %}
 
@@ -57,9 +57,10 @@
                         <span class="c-field__icon">
                             <i class="fa fa-smile-o"></i>
                         </span>
-                        <label class="c-field__label u-hidden-visually" for="input-chat">Begin Chat</label>
-		                    <input class="c-input" id="msg" name="msg" type="text" placeholder="Begin Chat..">
-                            <button class="btn btn-primary" id="send" type="button">Submit form</button>
+                        <form method="POST" name="send" id="send">
+                            <label class="c-field__label u-hidden-visually" for="input-chat">Begin Chat</label>
+		                    <input class="c-input" id="tchat1" type="text" placeholder="Begin Chat..">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -68,38 +69,52 @@
 
 
         	<script type="text/javascript">
-        $(document).ready(function(){
-            var conn = new WebSocket('ws://localhost:8080');
+        $(function(){
+            var conn = new WebSocket('ws://51.38.230.190:8080');
+            myscroll1();
             conn.onopen = function(e) {
-                console.log("Connection established!");        
+                //console.log("Connection established!");        
             };
 
             conn.onmessage = function(e) {
                 obj = JSON.parse(e.data);
                document.getElementById('local').innerHTML = document.getElementById('local').innerHTML+"<br />"+'<div class="c-chat-dialogue__message"><div class="c-chat-dialogue__message-content">'+obj.msg+'</div></div>';
-              // document.write(e.data);
-
-			   console.log(e.data);		   
+			   //console.log(e.data);
+               myscroll1();   
             };
 
-            $("#send").click(function(){
-                 var msg = $("#msg").val();
+            $('#send').submit(function(e){ 
+                e.preventDefault();
+                var msg = $("#tchat1").val();
 		        var user = "moi";
+                var chan = '2';
                 var data = {
+                    chan: chan,
                     user: user,
                     msg: msg
                 };
                 $.ajax({
                     data: {
+                        chan: chan,
                         user: user,
                         msg: msg
                     },
                     type: "POST",
-                    url: "http://localhost/otaku-Stream/public/dbtchat",
+                    url: "{{ path('index') }}dbtchat",
 
                 })
                 document.getElementById('local').innerHTML = document.getElementById('local').innerHTML+'<br /><div class="c-chat-dialogue__message c-chat-dialogue__message--self"><div class="c-chat-dialogue__message-content">'+msg+'</div></div>';
                 conn.send(JSON.stringify(data));
+                //console.log(e.data);
+                myscroll1();	
+                
             })
+            
         })
+
+        myscroll1 = (function(){
+            element = document.getElementById('ntmz');
+            element.scrollTop = element.scrollHeight;
+        });
+    
     </script>

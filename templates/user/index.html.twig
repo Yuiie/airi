@@ -1,0 +1,17 @@
+{% extends 'native.html.twig' %}
+{% set message = message %}
+{% set listanime = anime %}
+{% block stylesheets %}
+        {{ parent() }}
+{% endblock %}
+
+{% block body_home %}
+
+    <div class="container">
+        {{ user.username }}
+        {{ user.email_address }} 
+    </div>
+{% endblock %}
+{% block js %}
+        {{ parent() }}
+{% endblock %}

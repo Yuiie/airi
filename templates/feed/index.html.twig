@@ -173,10 +173,10 @@
                     </div>
             {% endif %}
             {% set count = count + 1 %}
+                    <div id="{{ feed.id }}s"></div> 
         {% endfor %}
         </div>
     </div>
-                    <div id="instant"></div> 
     <script>
      $(document).ready(function(){
             var conn = new WebSocket('ws://51.38.230.190:8080');
@@ -186,7 +186,7 @@
 
             conn.onmessage = function(e) {
                 obj = JSON.parse(e.data);
-               document.getElementById('instant').innerHTML = document.getElementById('instant').innerHTML+"<br />"+'<div class="text"><p style="margin-left: 10px">'+obj.pseudo+obj.msg+'</p></div>';
+               document.getElementById(obj.id's').innerHTML = document.getElementById(obj.id's').innerHTML+"<br />"+'<div class="text"><p style="margin-left: 10px">'+obj.pseudo+obj.msg+'</p></div>';
               // document.write(e.data);
 
 			   console.log(e.data);		   

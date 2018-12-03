@@ -139,14 +139,20 @@
                                         $('#form_{{ feed.id }}').submit(function(e){ 
                                             e.preventDefault();
                                                 var msg = $("#msg_{{ feed.id }}").val();
-                                                var parent = '{{ feed.id }}';
+                                                var parent = '{{ feed.parent }}';
+                                                var id = '{{ feed.id }}';
+                                                var pseudo = "defck";
                                                 var data = {
                                                     parent: parent,
+                                                    pseudo: pseudo,
+                                                    id: id,
                                                     msg: msg
                                                 };
                                                 $.ajax({
                                                     data: {
                                                         parent: parent,
+                                                        pseudo: pseudo
+                                                        id: id,
                                                         msg: msg
                                                     },
                                                     type: "POST",
@@ -161,11 +167,24 @@
                             </div>
                         </div>
                     </div>
+                    <div id="local"></div> 
             {% endif %}
             {% set count = count + 1 %}
         {% endfor %}
         </div>
     </div>
+    <script>
+     $(document).ready(function(){
+            conn.onmessage = function(e) {
+                obj = JSON.parse(e.data);
+               document.getElementById('local').innerHTML = document.getElementById('local').innerHTML+"<br />"+'
+                        <div class="text"><p style="margin-left: 10px">' obj.pseudo obj.msg '</p></div></div>';
+              // document.write(e.data);
+
+			   console.log(e.data);		   
+            };
+     })
+    </script>
     <script src="{{ asset('js/tabs.js') }}"></script>
 {% endblock %}
 

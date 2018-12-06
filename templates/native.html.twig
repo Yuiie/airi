@@ -301,7 +301,12 @@
 
                 <div class="c-dropdown dropdown">
                     <a  class="c-avatar c-avatar--xsmall has-dropdown dropdown-toggle" href="#" id="dropdwonMenuAvatar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="c-avatar__img" src="{{ asset('assets/img/avatar-72.jpg') }}" alt="User's Profile Picture">
+                        {% if user is defined and user is not null %}
+                            <img class="c-avatar__img" src="{{ path('index') }}uploads/img/gallery/{{ user.icon.image }}" alt="User's Profile Picture">
+                        {% endif %}
+                        {% if user is not defined or user is null %}
+                            <img class="c-avatar__img" src="{{ asset('assets/img/avatar-72.jpg') }}" alt="User's Profile Picture">
+                        {% endif %}
                     </a>
 
                     <div class="c-dropdown__menu dropdown-menu dropdown-menu-right" aria-labelledby="dropdwonMenuAvatar">

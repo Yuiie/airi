@@ -8,12 +8,16 @@ use App\Utils\LevelClass;
 use App\Entity\Anime;
 use App\Entity\Episode;
 use App\Entity\Groupe;
+use App\Entity\Images;
 use App\Entity\Video;
 use App\Entity\Tchat;
+
 use App\Form\AddAnimeType;
 use App\Form\AddEpisodeType;
 use App\Form\VideoType;
 use App\Form\TchatType;
+use App\Form\UploadImageType;
+
 use App\Utils\AnimeManager;
 use App\Form\CreateGroupeType;
 
@@ -205,5 +209,77 @@ class AddController extends AbstractController
             }
         return $this->render('add/add-video.html.twig', ['form' => $form->createView(),
          'message' => $message, 'anime' => $anime, 'level' => $level]);
+    }
+
+    /**
+     * @Route("/Add/image", name="add_image")
+     */
+    public function addImage(Request $request)
+    {
+        if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'IS_AUTHENTICATED_FULLY' ) )
+            {
+                
+                $user = $this->container->get('security.token_storage')->getToken()->getUser();
+                $db = $this->getDoctrine()->getManager();
+
+                ## Tchat
+                TchatClass::Tchat($request);
+                $message = $db->getRepository('App:Tchat')->findAll();
+
+                ## Level
+                if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'IS_AUTHENTICATED_FULLY' ) )
+                    {
+                        $userid = $this->getUser()->getId();
+                        $level = LevelClass::showLevel($request, $userid);
+                    } else {
+                        $level = null;
+                    }
+
+                ## Search Bar
+                $anime = $db->getRepository('App:Anime')->findBy(
+                    array(),
+                    array('nom' => 'ASC')
+                );
+                
+                ## set image
+                $image = new Images();
+                $form = $this->createForm(UploadImageType::class, $image);
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+                    // $file stores the uploaded PDF file
+                    /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+                    $file = $image->getImage();
+        
+                    $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                    try {
+                        $file->move(
+                            $this->getParameter('img_user'),
+                            $fileName
+                        );
+                    } catch (FileException $e) {
+                    }
+        
+                    $image->setImage($fileName);
+                    $image->setPseudo($user);
+                    $image->setDate(new \datetime('now'));
+                    $db->persist($image);
+                    $db->flush();
+
+                    return $this->redirect($this->generateUrl('index'));
+                }
+                ##
+                
+                return $this->render('user/image.html.twig', [
+                    'message' => $message,
+                    'anime' => $anime,
+                    'level' => $level,
+                    'form' => $form->createView()
+                    ]);
+            }
+            else {
+                $url = "airi.ovh";
+                return $this->redirect($url);
+            }
     }
 }

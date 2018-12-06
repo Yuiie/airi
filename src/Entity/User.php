@@ -37,9 +37,14 @@ class User extends BaseUser
     private $image;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Images")
      */
     private $icon;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Images")
+     */
+    private $couverture;
 
     public function __construct()
     {
@@ -129,14 +134,26 @@ class User extends BaseUser
         return $this;
     }
 
-    public function getIcon(): ?string
+    public function getIcon(): ?Images
     {
         return $this->icon;
     }
 
-    public function setIcon(?string $icon): self
+    public function setIcon(?Images $icon): self
     {
         $this->icon = $icon;
+
+        return $this;
+    }
+
+    public function getCouverture(): ?Images
+    {
+        return $this->couverture;
+    }
+
+    public function setCouverture(?Images $couverture): self
+    {
+        $this->couverture = $couverture;
 
         return $this;
     }

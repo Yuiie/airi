@@ -1,0 +1,26 @@
+{% extends 'native.html.twig' %}
+{% set message = message %}
+{% set listanime = anime %}
+
+{% block stylesheets %}
+        {{ parent() }}
+{% endblock %}
+
+{% block body_home %}
+  <div class="row u-m-small">
+        <center>
+        {{ form_start(form) }}
+
+
+        <div class="form-group">
+            {{ form_label(form.icon) }}
+            {{ form_widget(form.icon, {'attr':{'class':'c-select has-search'}}) }}
+            {{ form_errors(form.icon) }}
+        </div>
+        <br />
+        <input type="submit" value="Send" class="c-input"/>
+        {{ form_end(form) }}
+        </center>
+    </div>
+    <script src="../js/main.min.js"></script>
+{% endblock %}

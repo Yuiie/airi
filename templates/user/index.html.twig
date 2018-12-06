@@ -1,15 +1,37 @@
 {% extends 'native.html.twig' %}
 {% set message = message %}
 {% set listanime = anime %}
+
 {% block stylesheets %}
         {{ parent() }}
 {% endblock %}
 
 {% block body_home %}
-
+    <style type="text/css">
+        .couverture {
+            height: 300px;
+            z-index: 1;
+        }
+        .roundedImage{
+            overflow:hidden;
+            -webkit-border-radius:50px;
+            -moz-border-radius:50px;
+            border-radius:50px;
+            width:90px;
+            height:90px;
+            z-index: 2;
+        }
+    </style>
     <div class="container">
-        Pseudo: {{ user.username }}
-        Email: {{ user.email }} 
+        {% if user.icon != null %}
+            <div class="couverture" style="background:url({{ path('index') }}uploads/img/gallery/{{ user.couverture.image }}) no-repeat 0px 0px;background-size: cover;">
+                <div class="roundedImage" style="background:url({{ path('index') }}uploads/img/gallery/{{ user.icon.image }}) no-repeat 0px 0px;background-size: 90px 90px;">
+                    &nbsp;
+                </div>
+            </div>
+        {% endif %}
+        Pseudo: {{ user.username }}<br />
+        Email: {{ user.email }}<br />
     </div>
 {% endblock %}
 {% block js %}

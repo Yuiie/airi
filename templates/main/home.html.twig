@@ -1,6 +1,7 @@
 {% extends 'native.html.twig' %}
 {% set message = message %}
 {% set listanime = anime %}
+{% set user = user %}
 
 
 {% block body_home %}
@@ -37,7 +38,7 @@
                         <!-- <img class="img-fluid" src="{{ randoms[rand].image }}" style="width: 400px; height: 210px;" alt="About the image">-->
                     </center>
                     <div class="c-project-card__content">
-                        <div class="c-project-card__head" style="min-height:150px;background-image: url(uploads/{{ randoms[rand].brochure }});background-size: cover;background-repeat:no-repeat;">
+                        <div class="c-project-card__head" style="min-height:150px;background-image: url(uploads/img/anime/{{ randoms[rand].brochure }});background-size: cover;background-repeat:no-repeat;">
                         </div>
 
                         <div class="c-project-card__meta">
@@ -69,7 +70,7 @@
                         <!-- <img class="img-fluid" src="{{ randoms[rand].image }}" style="width: 400px; height: 210px;" alt="About the image">-->
                     </center>
                     <div class="c-project-card__content">
-                        <div class="c-project-card__head" style="min-height:150px;background-image: url(uploads/{{ randoms[rand].brochure }});background-size: cover;background-repeat:no-repeat;">
+                        <div class="c-project-card__head" style="min-height:150px;background-image: url(uploads/img/anime/{{ randoms[rand].brochure }});background-size: cover;background-repeat:no-repeat;">
                         </div>
 
                         <div class="c-project-card__meta">

@@ -129,10 +129,12 @@ class MainController extends AbstractController
         ## Level
         if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'IS_AUTHENTICATED_FULLY' ) )
             {
-                $user = $this->getUser()->getId();
-                LevelClass::addLevel($request, $user, 10);
-                $level = LevelClass::showLevel($request, $user);
+                $user_id = $this->getUser()->getId();
+                $user = $this->getUser();
+                LevelClass::addLevel($request, $user_id, 10);
+                $level = LevelClass::showLevel($request, $user_id);
             } else {
+                $user = null;
                 $level = null;
             }
 
@@ -151,8 +153,13 @@ class MainController extends AbstractController
             8
         );
         return $this->render('main/home.html.twig', [
-            'controller_name' => 'MainController', 'listarticle' => $episode, 'random' => $anime,
-            'message' => $message, 'anime' => $anime, 'level' => $level
+            'controller_name' => 'MainController',
+            'listarticle' => $episode,
+            'message' => $message,
+            'user' => $user,
+            'random' => $anime,
+            'anime' => $anime,
+            'level' => $level
         ]);
     }
 

@@ -4,14 +4,20 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Images;
 use App\Entity\Groupe;
+
 use App\Form\CreateGroupeType;
 use App\Entity\GroupeMember;
 use App\Form\GroupMemberType;
 use App\Form\UploadImageType;
+use App\Form\UserImageType;
+use App\Form\UserCouvertureType;
+
 use App\Utils\TchatClass;
 use App\Utils\LevelClass;
 use App\Entity\Tchat;
 
+
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -115,74 +121,104 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profile/add-image", name="profile-add-image")
+     * @Route("/profile/set/image", name="add_episode")
      */
-    public function addImage(Request $request)
+    public function setImage(Request $request)
     {
+        
+        $em = $this->getDoctrine()->getManager();
+
+        ## tchat
+        TchatClass::Tchat($request);
+        $message = $em->getRepository('App:Tchat')->findAll();
+
+        ## Level
         if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'IS_AUTHENTICATED_FULLY' ) )
             {
-                
-                $user = $this->container->get('security.token_storage')->getToken()->getUser();
-                $db = $this->getDoctrine()->getManager();
+                $user = $this->getUser()->getId();
+                $level = LevelClass::showLevel($request, $user);
+            } else {
+                $level = null;
+            }
 
-                ## Tchat
-                TchatClass::Tchat($request);
-                $message = $db->getRepository('App:Tchat')->findAll();
+        ## Search Bar
+        $anime = $em->getRepository('App:Anime')->findBy(
+            array(),
+            array('nom' => 'ASC')
+        );
 
-                ## Level
-                if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'IS_AUTHENTICATED_FULLY' ) )
+        ## Check Connexion
+        if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'IS_AUTHENTICATED_FULLY' ) )
+            {
+                ## Get user info
+                $bdd = $this->container->get('security.token_storage')->getToken()->getUser();
+                $nom = $bdd->getUsername();
+                $user = $em->getRepository('App:User')->findOneById($bdd->getId());
+
+                $form = $this->createForm(UserImageType::class, $user);
+
+                ## Check form
+                if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
                     {
-                        $userid = $this->getUser()->getId();
-                        $level = LevelClass::showLevel($request, $userid);
-                    } else {
-                        $level = null;
+                        $em->persist($user);
+                        $em->flush();
                     }
-
-                ## Search Bar
-                $anime = $db->getRepository('App:Anime')->findBy(
-                    array(),
-                    array('nom' => 'ASC')
-                );
-                
-                ## set image
-                $image = new Images();
-                $form = $this->createForm(UploadImageType::class, $image);
-                $form->handleRequest($request);
-
-                if ($form->isSubmitted() && $form->isValid()) {
-                    // $file stores the uploaded PDF file
-                    /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
-                    $file = $image->getImage();
-        
-                    $fileName = md5(uniqid()).'.'.$file->guessExtension();
-                    try {
-                        $file->move(
-                            $this->getParameter('img_user'),
-                            $fileName
-                        );
-                    } catch (FileException $e) {
-                    }
-        
-                    $image->setImage($fileName);
-                    $image->setPseudo($user);
-                    $image->setDate(new \datetime('now'));
-                    $db->persist($image);
-                    $db->flush();
-
-                    return $this->redirect($this->generateUrl('index'));
-                }
-                ##
-                
-                return $this->render('user/image.html.twig', [
-                    'message' => $message,
-                    'anime' => $anime,
-                    'level' => $level,
-                    'form' => $form->createView()
-                    ]);
             }
             else {
-                $url = "airi.ovh";
-                return $this->redirect($url);
+                return $this->redirect('http://airi.ovh');
             }
+        return $this->render('user/set-image.html.twig', ['form' => $form->createView(),
+         'message' => $message, 'anime' => $anime, 'level' => $level]);
     }
+    /**
+     * @Route("/profile/set/couverture", name="add_couverture")
+     */
+    public function setCouverture(Request $request)
+    {
+        
+        $em = $this->getDoctrine()->getManager();
+
+        ## tchat
+        TchatClass::Tchat($request);
+        $message = $em->getRepository('App:Tchat')->findAll();
+
+        ## Level
+        if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'IS_AUTHENTICATED_FULLY' ) )
+            {
+                $user = $this->getUser()->getId();
+                $level = LevelClass::showLevel($request, $user);
+            } else {
+                $level = null;
+            }
+
+        ## Search Bar
+        $anime = $em->getRepository('App:Anime')->findBy(
+            array(),
+            array('nom' => 'ASC')
+        );
+
+        ## Check Connexion
+        if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'IS_AUTHENTICATED_FULLY' ) )
+            {
+                ## Get user info
+                $bdd = $this->container->get('security.token_storage')->getToken()->getUser();
+                $nom = $bdd->getUsername();
+                $user = $em->getRepository('App:User')->findOneById($bdd->getId());
+
+                $form = $this->createForm(UserCouvertureType::class, $user);
+
+                ## Check form
+                if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+                    {
+                        $em->persist($user);
+                        $em->flush();
+                    }
+            }
+            else {
+                return $this->redirect('http://airi.ovh');
+            }
+        return $this->render('user/set-couverture.html.twig', ['form' => $form->createView(),
+         'message' => $message, 'anime' => $anime, 'level' => $level]);
+    }
+
 }

@@ -1,0 +1,141 @@
+{% extends 'native.html.twig' %}
+{% set message = message %}
+{% set listanime = anime %}
+{% set user = user %}
+
+
+{% block body_home %}
+
+    {% block stylesheets %}
+            {{ parent() }}
+    {% endblock %}
+    <link href="{{ path('index') }}css/button.css" rel="stylesheet">
+
+    <div class="row u-mb-large">
+        <div class="col-12">
+
+            <!-- ADD FRIEND -->
+            <div class="c-chat-dialogue__footer">
+                <form method="POST" name="send" id="send">
+                    <label class="c-field__label u-hidden-visually" for="input-chat">Ajouter un ami</label>
+                    <input class="c-input" id="dest" type="text" placeholder="Begin Chat..">
+                </form>
+            </div>
+            <!-- END ADD FRIEND -->
+
+                    <table class="c-table" id="datatable">
+                        <caption class="c-table__title">
+                            Demandes d'ami reçu
+                        </caption>
+
+                        <thead class="c-table__head c-table__head--slim">
+                            <tr class="c-table__row">
+                                <th class="c-table__cell c-table__cell--head">Pseudo</th>
+                                <th class="c-table__cell c-table__cell--head no-sort">Reponse</th>
+                                <th class="c-table__cell c-table__cell--head">Date</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for req in friend %}
+                            <tr class="c-table__row">
+                                <td class="c-table__cell">
+                                    <a href="{{ path('index') }}user/{{ req.req }}">
+                                            {{ req.dest.username }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning" onclick="acceptFriend({{ req.id }})">Accepter</button>
+                                    <button type="button" class="btn btn-warning" onclick="removeReq({{ req.id }})">Annuler</button>
+                                </td>
+                                <td class="c-table__cell">
+                                    {{ req.date|date('Y-m-d H:i') }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                    <table class="c-table" id="datatable">
+                        <caption class="c-table__title">
+                            Demandes d'ami envoyé
+                        </caption>
+
+                        <thead class="c-table__head c-table__head--slim">
+                            <tr class="c-table__row">
+                                <th class="c-table__cell c-table__cell--head">Pseudo</th>
+                                <th class="c-table__cell c-table__cell--head no-sort">Reponse</th>
+                                <th class="c-table__cell c-table__cell--head">Date</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for req in friendReq %}
+                            <tr class="c-table__row">
+                                <td class="c-table__cell">
+                                    <a href="{{ path('index') }}user/{{ req.dest }}">
+                                        {{ req.dest.username }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning" onclick="removeReq({{ req.id }})">Annuler</button>
+                                </td>
+                                <td class="c-table__cell">
+                                    {{ req.date|date('Y-m-d H:i') }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        function removeReq(a) {
+                            var dest = a;
+                            var data = {
+                                        dest: dest
+                                    };
+                                    $.ajax({
+                                        data: {
+                                            dest: dest
+                                        },
+                                        type: "POST",
+                                        url: "{{ path('index') }}amis/cancel-request",
+                                    })
+                        }
+        function acceptFriend(a) {
+            var dest = a;
+            var data = {
+                        dest: dest
+                    };
+            $.ajax({
+                    data: {
+                        dest: dest
+                    },
+                    type: "POST",
+                    url: "{{ path('index') }}amis/accept",
+                })
+        }
+        $(function(){
+            $('#send').submit(function(e){ 
+                e.preventDefault();
+                var dest = $("#dest").val();
+                var data = {
+                    dest: dest
+                };
+                $.ajax({
+                    data: {
+                        dest: dest
+                    },
+                    type: "POST",
+                    url: "{{ path('index') }}dbamis",
+
+                })
+            })            
+        })
+    
+    </script>           
+
+{% endblock %}

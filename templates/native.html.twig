@@ -89,11 +89,23 @@
                         </a>
                         <ul class="c-sidebar__submenu collapse" id="social">
                             <li><a class="c-sidebar__link" href="{{ path('feed') }}">Feed</a></li>
-                            <li class="c-sidebar__item">
-                                <a class="c-sidebar__link" href="#">
-                                    <i class="fa fa-user-plus u-mr-xsmall"></i>Amis
-                                </a>
-                            </li>
+
+                            <!-- Amis -->
+                            <a class="c-sidebar__link" data-toggle="collapse" href="#amis" aria-expanded="false" aria-controls="social">
+                                <i class="fa fa-user-plus u-mr-xsmall"></i>Amis
+                            </a>
+                            <ul class="c-sidebar__submenu collapse" id="amis">
+                                <li class="c-sidebar__item">
+                                    <a class="c-sidebar__link" href="{{ path('index') }}">
+                                        <i class="fa fa-users u-mr-xsmall"></i>Mes amis
+                                    </a>
+                                </li>
+                                <li class="c-sidebar__item">
+                                    <a class="c-sidebar__link" href="{{ path('add-amis') }}">
+                                        <i class="fa fa-users u-mr-xsmall"></i>Ajouter des amis
+                                    </a>
+                                </li>
+                            </ul>
                             <!-- Groupes -->
                             <a class="c-sidebar__link" data-toggle="collapse" href="#group" aria-expanded="false" aria-controls="social">
                                 <i class="fa fa-street-view u-mr-xsmall"></i>Groupe
@@ -116,6 +128,11 @@
                                 </li>
                             </ul>
                             <!-- Fin Groupes -->
+                            <li class="c-sidebar__item">
+                                    <a class="c-sidebar__link" href="{{ path('classement') }}">
+                                        <i class="fa fa-globe" style="padding-right:6px;"></i>Classement
+                                    </a>
+                                </li>
                             <li class="c-sidebar__item">
                                 <a class="c-sidebar__link" href="{{ path('messenger') }}">
                                     <i class="fa fa-comments-o u-mr-xsmall"></i>Messanger

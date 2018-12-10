@@ -1,0 +1,74 @@
+{% extends 'native.html.twig' %}
+{% set message = message %}
+{% set listanime = anime %}
+{% set user = user %}
+
+
+{% block body_home %}
+
+    {% block stylesheets %}
+            {{ parent() }}
+    {% endblock %}
+    <link href="{{ path('index') }}css/button.css" rel="stylesheet">
+
+    <div class="row u-mb-large">
+        <div class="col-12">
+
+            <table class="c-table" id="datatable">
+                <caption class="c-table__title">
+                    Mes amis
+                </caption>
+
+                <thead class="c-table__head c-table__head--slim">
+                    <tr class="c-table__row">
+                        <th class="c-table__cell c-table__cell--head">Pseudo</th>
+                        <th class="c-table__cell c-table__cell--head no-sort">Image</th>
+                        <th class="c-table__cell c-table__cell--head no-sort">Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for req in friend %}
+                    <tr class="c-table__row">
+                        <td class="c-table__cell">
+                            <a href="{{ path('index') }}user/{{ req.req }}">
+                                    {{ req.dest.username }}
+                            </a>
+                        </td>
+                        <td>
+                            {% if req.dest.icon is not null and req.dest.image is not null %}
+                                <img class="c-avatar__img" src="{{ path('index') }}uploads/img/gallery/{{ req.dest.icon.image }}" style="width:50px;height:50px">
+                            {% else %}
+                                <img class="c-avatar__img" src="{{ asset('assets/img/avatar-72.jpg') }}" style="width:50px;height:50px">
+                            {% endif %}
+                        </td>
+                        <td class="c-table__cell">
+                            {{ req.date|date('Y-m-d H:i') }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% for req in friend1 %}
+                    <tr class="c-table__row">
+                        <td class="c-table__cell">
+                            <a href="{{ path('index') }}user/{{ req.req }}">
+                                    {{ req.req.username }}
+                            </a>
+                        </td>
+                        <td>
+                            {% if req.req.icon is not null and req.req.icon.image is not null %}
+                                <img class="c-avatar__img" src="{{ path('index') }}uploads/img/gallery/{{ req.req.icon.image }}" style="width:50px;height:50px">
+                            {% else %}
+                                <img class="c-avatar__img" src="{{ asset('assets/img/avatar-72.jpg') }}" style="width:50px;height:50px">
+                            {% endif %}
+                        </td>
+                        <td class="c-table__cell">
+                            {{ req.date|date('Y-m-d H:i') }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>  
+
+{% endblock %}

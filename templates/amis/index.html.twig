@@ -1,0 +1,46 @@
+{% extends 'native.html.twig' %}
+{% set message = message %}
+{% set listanime = anime %}
+{% set user = user %}
+
+{% block body_home %}
+
+    {% block stylesheets %}
+            {{ parent() }}
+    {% endblock %}
+    
+        <table class="c-table" id="datatable">
+            <caption class="c-table__title">
+                Trouvez des amis
+            </caption>
+
+            <thead class="c-table__head c-table__head--slim">
+                <tr class="c-table__row">
+                    <th class="c-table__cell c-table__cell--head no-sort">id</th>
+                    <th class="c-table__cell c-table__cell--head">image</th>
+                    <th class="c-table__cell c-table__cell--head">username</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for user in users %}
+                <tr class="c-table__row">
+                    <td class="c-table__cell">{{ user.id }}</td>
+                    <td>
+                        {% if user.icon is not null and user.icon.image is not null %}
+                            <img class="c-avatar__img" src="{{ path('index') }}uploads/img/gallery/{{ user.icon.image }}" style="width:50px;height:50px">
+                        {% else %}
+                            <img class="c-avatar__img" src="{{ asset('assets/img/avatar-72.jpg') }}" style="width:50px;height:50px">
+                        {% endif %}
+                    </td>
+                    <td class="c-table__cell">
+                        <a href="{{ path('index') }}user/{{ user.id }}">
+                            {{ user.username }}
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock %}

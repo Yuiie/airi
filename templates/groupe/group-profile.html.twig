@@ -1,0 +1,20 @@
+{% extends 'native.html.twig' %}
+{% set message = message %}
+{% set listanime = anime %}
+
+{% block stylesheets %}
+        {{ parent() }}
+{% endblock %}
+
+{% block body_home %}
+    <div class="container">
+        {{ group.nom }}
+
+        {% for article in member %}
+                    <li><a class="nav-item" href="">{{ article.member.username }}</a></li>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block js %}
+        {{ parent() }}
+{% endblock %}

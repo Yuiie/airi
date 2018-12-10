@@ -8,10 +8,12 @@
 
 {% block body_home %}
     <style type="text/css">
+        
         .couverture {
             height: 300px;
             z-index: 1;
         }
+
         .roundedImage{
             overflow:hidden;
             -webkit-border-radius:50px;
@@ -23,13 +25,19 @@
         }
     </style>
     <div class="container">
-        {% if user.icon != null %}
-            <div class="couverture" style="background:url({{ path('index') }}uploads/img/gallery/{{ user.couverture.image }}) no-repeat 0px 0px;background-size: cover;">
-                <div class="roundedImage" style="background:url({{ path('index') }}uploads/img/gallery/{{ user.icon.image }}) no-repeat 0px 0px;background-size: 90px 90px;">
-                    &nbsp;
-                </div>
+
+        {% if user.couverture != null and user.couverture.image != null %}
+            <div class="couverture" style="background:url({{ path('index') }}uploads/img/gallery/{{ user.couverture.image }}) no-repeat 0px 0px;background-size: cover;" >            
+        {% endif %}        
+                {% if user.icon != null and user.icon.image != null %}    
+                    <div class="roundedImage"  style="background:url({{ path('index') }}uploads/img/gallery/{{ user.icon.image }}) no-repeat 0px 0px;background-size: 90px 90px;" >
+                        &nbsp;
+                    </div>
+                {% endif %}
+        {% if user.couverture != null and user.couverture.image != null %}
             </div>
         {% endif %}
+        
         Pseudo: {{ user.username }}<br />
         Email: {{ user.email }}<br />
     </div>

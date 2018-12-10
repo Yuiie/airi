@@ -34,7 +34,7 @@ class GroupeMember
     /**
      * @ORM\Column(type="integer")
      */
-    private $rank;
+    public $rank;
 
     public function getId(): ?int
     {

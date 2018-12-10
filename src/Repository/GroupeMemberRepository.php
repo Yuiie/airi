@@ -56,6 +56,20 @@ class GroupeMemberRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findOneByRank($value, $user)
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.groupe = :val')
+            ->setParameter('val', $value)
+            ->andWhere('g.member = :user')
+            ->setParameter('user', $user)
+            ->andWhere('g.rank = :rank')
+            ->setParameter('rank', "1")
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
       public function findOneById($value)
     {
         return $this->createQueryBuilder('g')

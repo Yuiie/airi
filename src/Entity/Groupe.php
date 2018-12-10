@@ -16,22 +16,22 @@ class Groupe
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    public $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    public $nom;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $rank;
+    public $rank;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
      */
-    private $member;
+    public $member;
 
     public function __construct()
     {

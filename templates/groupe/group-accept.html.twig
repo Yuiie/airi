@@ -2,13 +2,13 @@
 {% set message = message %}
 {% set listanime = anime %}
 
-
 {% block body_home %}
 
     {% block stylesheets %}
             {{ parent() }}
     {% endblock %}
 
+ <div class="container">
     {% for request in req %}
         <li><a class="nav-item" href="">{{request.id}} | {{ request.groupe.nom }} | {{ request.member.username }}</a></li>
         <form method="POST">
@@ -16,6 +16,6 @@
             <button name="reject" type="submit" value="{{request.id}}">Rejeter</button>
         </form>
     {% endfor %}
-
+</div>
 
 {% endblock %}
